@@ -42,8 +42,10 @@ struct ReportsView: View {
     }
 }
 
-#Preview {
-    ReportsView(store: MarketDataStore())
+struct ReportsView_Previews: PreviewProvider {
+    static var previews: some View {
+        ReportsView(store: MarketDataStore())
+    }
 }
 
 private struct MarketReportCard: View {

@@ -116,7 +116,8 @@ private struct AlertRowView: View {
     }
 }
 
-#Preview {
-    AlertsView(store: MarketDataStore())
+struct AlertsView_Previews: PreviewProvider {
+    static var previews: some View {
+        AlertsView(store: MarketDataStore())
+    }
 }
-

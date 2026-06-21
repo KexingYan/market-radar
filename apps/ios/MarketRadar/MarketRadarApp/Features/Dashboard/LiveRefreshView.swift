@@ -37,7 +37,7 @@ struct LiveRefreshView: View {
                 }
 
                 if let result = store.liveRefreshResult {
-                    Section("Live Summary") {
+                    Section {
                         StatusRow(title: "Processed symbols", value: result.symbols.joined(separator: ", "))
                         StatusRow(title: "Watchlist fallback AAPL", value: result.fallbackSymbolUsed ? "yes" : "no")
                         StatusRow(title: "SEC success", value: result.sec.success ? "yes" : "no")
@@ -51,11 +51,13 @@ struct LiveRefreshView: View {
                         StatusRow(title: "Report archived", value: result.report.generated ? "yes" : "no")
                         StatusRow(title: "Alerts created", value: "\(result.alerts.createdAlerts)")
                         StatusRow(title: "Job run", value: result.jobRun.status)
+                    } header: {
+                        Text("Live Summary")
                     }
                 }
 
                 if let history = store.liveHistorySnapshot {
-                    Section("History Verification") {
+                    Section {
                         StatusRow(title: "Quote rows", value: "\(history.quoteRows)")
                         if let symbol = history.quoteSymbols.first {
                             StatusRow(title: "Latest quote symbol", value: symbol)
@@ -70,6 +72,8 @@ struct LiveRefreshView: View {
                             StatusRow(title: "New alerts", value: "\(summary.new)")
                             StatusRow(title: "High/Critical alerts", value: "\(summary.highOrCritical)")
                         }
+                    } header: {
+                        Text("History Verification")
                     } footer: {
                         Text("Quote history is shown only as row count, symbol, and timestamp. Prices are intentionally not displayed here.")
                     }
@@ -114,6 +118,8 @@ private struct StatusRow: View {
     }
 }
 
-#Preview {
-    LiveRefreshView(store: MarketDataStore())
+struct LiveRefreshView_Previews: PreviewProvider {
+    static var previews: some View {
+        LiveRefreshView(store: MarketDataStore())
+    }
 }

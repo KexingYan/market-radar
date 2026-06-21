@@ -105,6 +105,8 @@ private struct SectionHeader: View {
     }
 }
 
-#Preview {
-    DashboardView(store: MarketDataStore())
+struct DashboardView_Previews: PreviewProvider {
+    static var previews: some View {
+        DashboardView(store: MarketDataStore())
+    }
 }

@@ -41,7 +41,12 @@ struct AlertRuleEditorView: View {
             return item ? "true" : "false"
         case .stringArray(let items):
             return items.joined(separator: ", ")
+        case .array(let items):
+            return items.map { displayValue($0) }.joined(separator: ", ")
+        case .object(let items):
+            return items.keys.sorted().map { key in
+                "\(key): \(displayValue(items[key]))"
+            }.joined(separator: ", ")
         }
     }
 }
-

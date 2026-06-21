@@ -45,6 +45,8 @@ struct WatchlistView: View {
     }
 }
 
-#Preview {
-    WatchlistView(store: MarketDataStore())
+struct WatchlistView_Previews: PreviewProvider {
+    static var previews: some View {
+        WatchlistView(store: MarketDataStore())
+    }
 }

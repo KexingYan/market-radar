@@ -58,7 +58,8 @@ struct AutomationView: View {
     }
 }
 
-#Preview {
-    AutomationView(store: MarketDataStore())
+struct AutomationView_Previews: PreviewProvider {
+    static var previews: some View {
+        AutomationView(store: MarketDataStore())
+    }
 }
-

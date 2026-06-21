@@ -1,0 +1,569 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5AF4D46B88EFD37C104D91E5 /* DataSourceStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306828EBB4B6589B32050789 /* DataSourceStatusView.swift */; };
+		BD9A1449C19F64CBDF0F06BC /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67116DED3A72DEFBCF6F8A8C /* DisclaimerView.swift */; };
+		EFD059B15DBB49FD8E4756D2 /* EventCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D819C44DF8CC27739138F09 /* EventCard.swift */; };
+		A3D258A7446C9074023A60B9 /* MockBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3DE5F20DD5EDA360E59873 /* MockBadge.swift */; };
+		1A697226AFDEF8BE23476122 /* QuoteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2CBA090FD98406DE6FC39D /* QuoteRow.swift */; };
+		BF6DE0FA0925C92F8ACA1B96 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908362F9B8F4D6E3A97B334A /* ContentView.swift */; };
+		85D93BD122F5BF132A7B216F /* RadarTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A544C139CF9E5981D6DC99E8 /* RadarTheme.swift */; };
+		EDD0530C778C4A9996166307 /* AlertDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D452F4CB47FC2F4BC611147D /* AlertDetailView.swift */; };
+		97E715BF61EB2903BE05A3F3 /* AlertRuleEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765B47C29959CD0B567D90CD /* AlertRuleEditorView.swift */; };
+		9C3C929EE54ED743489338F2 /* AlertRuleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB296B86C3A61C041DFFD2A /* AlertRuleListView.swift */; };
+		F6B2EEB3586395520C32A024 /* AlertsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E102B1C5010D04ABB5CABE /* AlertsView.swift */; };
+		BCF5BED9EE6EA9816D1E104A /* AutomationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C074DF501224B09DEEFE2B8 /* AutomationView.swift */; };
+		BB28060D0D46694054928659 /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234DF411A33006406112B219 /* JobDetailView.swift */; };
+		A6EE7609648AB21C6997F0BE /* JobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27EB85D3E9DDFBB2F13A6C8 /* JobListView.swift */; };
+		F0ADBB37706D3D2298B54CAD /* JobRunDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE07014D978A9B4C7EC7FC5 /* JobRunDetailView.swift */; };
+		459448B498FA868639147F32 /* JobRunListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE95F3263B2AA4B9FD46ACAA /* JobRunListView.swift */; };
+		5D73EB653CBDE33F5A03ECF5 /* SchedulerStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61210A4CA4CD9D8A9F11F08 /* SchedulerStatusView.swift */; };
+		B1528531AF97ADB5E1D6164E /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C84084AC616DA03BA12B9EF /* DashboardView.swift */; };
+		15588F3A0706999F288460E8 /* LiveRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE2742EA17D0CBF0EFBC582 /* LiveRefreshView.swift */; };
+		CDDC85F1CF2134F5000C0591 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93A842DA5209225B395837B /* EventsView.swift */; };
+		6C0DC364B9FCD44BE1B8F927 /* ReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6641E3A97100ACB3B7E0B1 /* ReportsView.swift */; };
+		573A6163CEF9D7A9C30873F9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21966E9B5549FCD4BC50E33E /* SettingsView.swift */; };
+		A09892B87AB45B09808DE6AB /* WatchlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415966AEC4C275D1626EB267 /* WatchlistView.swift */; };
+		CFB9701140BE4BB28144AF0F /* MarketRadarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434E898D1B505692F811CE9 /* MarketRadarApp.swift */; };
+		60BD7D6ABADD9B3A6A1BCBF3 /* MockMarketData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8903FCC9511D15271D6551C6 /* MockMarketData.swift */; };
+		7B84B3250A28A0301BCC3759 /* AlertModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17310FACE7788EA89B85E4A0 /* AlertModels.swift */; };
+		063DFABEF23AE02952DDFE05 /* AutomationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151A08234DF26282C1CA789F /* AutomationModels.swift */; };
+		B37BB4D7BBA7F059A5E05755 /* DailyReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AA0344F9FB02A799069972 /* DailyReport.swift */; };
+		7CB9AE395A0B7177B6BDB8F6 /* LiveRefreshModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92ED1EFFD0EDFA3647696181 /* LiveRefreshModels.swift */; };
+		F1C8B1F309369D7763404E77 /* MarketEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B9DD0E65DBDDAF6E3C57DC /* MarketEvent.swift */; };
+		52020394A5F77F3E9601D697 /* MarketReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC60D34687C4034802B9BC11 /* MarketReport.swift */; };
+		94A1AAE70372725E4B7AB849 /* ProviderStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8F689B8EDB3A842690AD7B /* ProviderStatus.swift */; };
+		49E5B6B699C5475D1B4AE5B0 /* QuoteSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E55F2D68093581892FA74 /* QuoteSnapshot.swift */; };
+		13E56D33608A59D295421040 /* StorageModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89045F2507117374F085F89D /* StorageModels.swift */; };
+		18C0444D29B8D41F30E09130 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5503CAEF5831EFA9E3CA9A /* APIClient.swift */; };
+		18437E09565558639CF98FEC /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7C6EF0A2C2528F9B70CDF4 /* AppEnvironment.swift */; };
+		393A488D96067A74BBCA1174 /* MarketDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A61137AD3C7F685F536B277 /* MarketDataStore.swift */; };
+		89C15012AE620AF67B93C076 /* MockMarketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540392FB65D1CCC2F8F89A6F /* MockMarketService.swift */; };
+		15F0ED3B2C00BBA6E0FC84B8 /* MarketRadarLocalAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7985B3E2F766BA8B3032E00 /* MarketRadarLocalAPITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D799BAE6088A90139B415FCC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 98F54143AB4E86B28C3AFEE0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CCD1BDFE40AA20836710EC01;
+			remoteInfo = MarketRadarApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5718BA8B2965F0F686C8E55B /* MarketRadar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarketRadar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EF5F27FC2840F4EF5595DEE /* MarketRadarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarketRadarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DF1A7C28E7D1C0487CE3358 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		306828EBB4B6589B32050789 /* DataSourceStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Components/DataSourceStatusView.swift"; sourceTree = "<group>"; };
+		67116DED3A72DEFBCF6F8A8C /* DisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Components/DisclaimerView.swift"; sourceTree = "<group>"; };
+		5D819C44DF8CC27739138F09 /* EventCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Components/EventCard.swift"; sourceTree = "<group>"; };
+		2D3DE5F20DD5EDA360E59873 /* MockBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Components/MockBadge.swift"; sourceTree = "<group>"; };
+		6F2CBA090FD98406DE6FC39D /* QuoteRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Components/QuoteRow.swift"; sourceTree = "<group>"; };
+		908362F9B8F4D6E3A97B334A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/ContentView.swift"; sourceTree = "<group>"; };
+		A544C139CF9E5981D6DC99E8 /* RadarTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/DesignSystem/RadarTheme.swift"; sourceTree = "<group>"; };
+		D452F4CB47FC2F4BC611147D /* AlertDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Alerts/AlertDetailView.swift"; sourceTree = "<group>"; };
+		765B47C29959CD0B567D90CD /* AlertRuleEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Alerts/AlertRuleEditorView.swift"; sourceTree = "<group>"; };
+		CBB296B86C3A61C041DFFD2A /* AlertRuleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Alerts/AlertRuleListView.swift"; sourceTree = "<group>"; };
+		04E102B1C5010D04ABB5CABE /* AlertsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Alerts/AlertsView.swift"; sourceTree = "<group>"; };
+		9C074DF501224B09DEEFE2B8 /* AutomationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Automation/AutomationView.swift"; sourceTree = "<group>"; };
+		234DF411A33006406112B219 /* JobDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Automation/JobDetailView.swift"; sourceTree = "<group>"; };
+		B27EB85D3E9DDFBB2F13A6C8 /* JobListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Automation/JobListView.swift"; sourceTree = "<group>"; };
+		6FE07014D978A9B4C7EC7FC5 /* JobRunDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Automation/JobRunDetailView.swift"; sourceTree = "<group>"; };
+		CE95F3263B2AA4B9FD46ACAA /* JobRunListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Automation/JobRunListView.swift"; sourceTree = "<group>"; };
+		B61210A4CA4CD9D8A9F11F08 /* SchedulerStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Automation/SchedulerStatusView.swift"; sourceTree = "<group>"; };
+		1C84084AC616DA03BA12B9EF /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Dashboard/DashboardView.swift"; sourceTree = "<group>"; };
+		FCE2742EA17D0CBF0EFBC582 /* LiveRefreshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Dashboard/LiveRefreshView.swift"; sourceTree = "<group>"; };
+		E93A842DA5209225B395837B /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Events/EventsView.swift"; sourceTree = "<group>"; };
+		9F6641E3A97100ACB3B7E0B1 /* ReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Reports/ReportsView.swift"; sourceTree = "<group>"; };
+		21966E9B5549FCD4BC50E33E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Settings/SettingsView.swift"; sourceTree = "<group>"; };
+		415966AEC4C275D1626EB267 /* WatchlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Features/Watchlist/WatchlistView.swift"; sourceTree = "<group>"; };
+		C434E898D1B505692F811CE9 /* MarketRadarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/MarketRadarApp.swift"; sourceTree = "<group>"; };
+		8903FCC9511D15271D6551C6 /* MockMarketData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/MockData/MockMarketData.swift"; sourceTree = "<group>"; };
+		17310FACE7788EA89B85E4A0 /* AlertModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Models/AlertModels.swift"; sourceTree = "<group>"; };
+		151A08234DF26282C1CA789F /* AutomationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Models/AutomationModels.swift"; sourceTree = "<group>"; };
+		D1AA0344F9FB02A799069972 /* DailyReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Models/DailyReport.swift"; sourceTree = "<group>"; };
+		92ED1EFFD0EDFA3647696181 /* LiveRefreshModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Models/LiveRefreshModels.swift"; sourceTree = "<group>"; };
+		A2B9DD0E65DBDDAF6E3C57DC /* MarketEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Models/MarketEvent.swift"; sourceTree = "<group>"; };
+		AC60D34687C4034802B9BC11 /* MarketReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Models/MarketReport.swift"; sourceTree = "<group>"; };
+		BA8F689B8EDB3A842690AD7B /* ProviderStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Models/ProviderStatus.swift"; sourceTree = "<group>"; };
+		B85E55F2D68093581892FA74 /* QuoteSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Models/QuoteSnapshot.swift"; sourceTree = "<group>"; };
+		89045F2507117374F085F89D /* StorageModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Models/StorageModels.swift"; sourceTree = "<group>"; };
+		EE5503CAEF5831EFA9E3CA9A /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Services/APIClient.swift"; sourceTree = "<group>"; };
+		DF7C6EF0A2C2528F9B70CDF4 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Services/AppEnvironment.swift"; sourceTree = "<group>"; };
+		3A61137AD3C7F685F536B277 /* MarketDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Services/MarketDataStore.swift"; sourceTree = "<group>"; };
+		540392FB65D1CCC2F8F89A6F /* MockMarketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarketRadarApp/Services/MockMarketService.swift"; sourceTree = "<group>"; };
+		C7985B3E2F766BA8B3032E00 /* MarketRadarLocalAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tests/MarketRadarLocalAPITests.swift"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		205F2BC6E24D7D856CEED464 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D8BB80BA9436BB8095981AD3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6CFC827E67DCAE34C72B9CED = {
+			isa = PBXGroup;
+			children = (
+				1DF401F405384E02A0BF02D3 /* MarketRadarApp */,
+				12E9DF2F0820E9F612A165AB /* Tests */,
+				B1D8042158A8115DF02B0BCA /* MarketRadar */,
+				021F2B7F3E0C61452C987484 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1DF401F405384E02A0BF02D3 /* MarketRadarApp */ = {
+			isa = PBXGroup;
+			children = (
+				306828EBB4B6589B32050789 /* DataSourceStatusView.swift */,
+				67116DED3A72DEFBCF6F8A8C /* DisclaimerView.swift */,
+				5D819C44DF8CC27739138F09 /* EventCard.swift */,
+				2D3DE5F20DD5EDA360E59873 /* MockBadge.swift */,
+				6F2CBA090FD98406DE6FC39D /* QuoteRow.swift */,
+				908362F9B8F4D6E3A97B334A /* ContentView.swift */,
+				A544C139CF9E5981D6DC99E8 /* RadarTheme.swift */,
+				D452F4CB47FC2F4BC611147D /* AlertDetailView.swift */,
+				765B47C29959CD0B567D90CD /* AlertRuleEditorView.swift */,
+				CBB296B86C3A61C041DFFD2A /* AlertRuleListView.swift */,
+				04E102B1C5010D04ABB5CABE /* AlertsView.swift */,
+				9C074DF501224B09DEEFE2B8 /* AutomationView.swift */,
+				234DF411A33006406112B219 /* JobDetailView.swift */,
+				B27EB85D3E9DDFBB2F13A6C8 /* JobListView.swift */,
+				6FE07014D978A9B4C7EC7FC5 /* JobRunDetailView.swift */,
+				CE95F3263B2AA4B9FD46ACAA /* JobRunListView.swift */,
+				B61210A4CA4CD9D8A9F11F08 /* SchedulerStatusView.swift */,
+				1C84084AC616DA03BA12B9EF /* DashboardView.swift */,
+				FCE2742EA17D0CBF0EFBC582 /* LiveRefreshView.swift */,
+				E93A842DA5209225B395837B /* EventsView.swift */,
+				9F6641E3A97100ACB3B7E0B1 /* ReportsView.swift */,
+				21966E9B5549FCD4BC50E33E /* SettingsView.swift */,
+				415966AEC4C275D1626EB267 /* WatchlistView.swift */,
+				C434E898D1B505692F811CE9 /* MarketRadarApp.swift */,
+				8903FCC9511D15271D6551C6 /* MockMarketData.swift */,
+				17310FACE7788EA89B85E4A0 /* AlertModels.swift */,
+				151A08234DF26282C1CA789F /* AutomationModels.swift */,
+				D1AA0344F9FB02A799069972 /* DailyReport.swift */,
+				92ED1EFFD0EDFA3647696181 /* LiveRefreshModels.swift */,
+				A2B9DD0E65DBDDAF6E3C57DC /* MarketEvent.swift */,
+				AC60D34687C4034802B9BC11 /* MarketReport.swift */,
+				BA8F689B8EDB3A842690AD7B /* ProviderStatus.swift */,
+				B85E55F2D68093581892FA74 /* QuoteSnapshot.swift */,
+				89045F2507117374F085F89D /* StorageModels.swift */,
+				EE5503CAEF5831EFA9E3CA9A /* APIClient.swift */,
+				DF7C6EF0A2C2528F9B70CDF4 /* AppEnvironment.swift */,
+				3A61137AD3C7F685F536B277 /* MarketDataStore.swift */,
+				540392FB65D1CCC2F8F89A6F /* MockMarketService.swift */,
+			);
+			name = MarketRadarApp;
+			sourceTree = "<group>";
+		};
+		12E9DF2F0820E9F612A165AB /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				C7985B3E2F766BA8B3032E00 /* MarketRadarLocalAPITests.swift */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		B1D8042158A8115DF02B0BCA /* MarketRadar */ = {
+			isa = PBXGroup;
+			children = (
+				2DF1A7C28E7D1C0487CE3358 /* Info.plist */,
+			);
+			path = MarketRadar/Supporting;
+			sourceTree = "<group>";
+		};
+		021F2B7F3E0C61452C987484 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5718BA8B2965F0F686C8E55B /* MarketRadar.app */,
+				4EF5F27FC2840F4EF5595DEE /* MarketRadarTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CCD1BDFE40AA20836710EC01 /* MarketRadarApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2835358D79238265300CDAC /* Build configuration list for PBXNativeTarget "MarketRadarApp" */;
+			buildPhases = (
+				DBF6CD71B0C4EC30100789D3 /* Sources */,
+				205F2BC6E24D7D856CEED464 /* Frameworks */,
+				05E689F15507506FE0040640 /* Sources */,
+			);
+			buildRules = ();
+			dependencies = ();
+			name = MarketRadarApp;
+			productName = MarketRadar;
+			productReference = 5718BA8B2965F0F686C8E55B /* MarketRadar.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5D9688571339E638D7EAD326 /* MarketRadarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F9B0E16AD5B8480358C8B0BD /* Build configuration list for PBXNativeTarget "MarketRadarTests" */;
+			buildPhases = (
+				BE4BC27101E7F29EB444ED01 /* Sources */,
+				D8BB80BA9436BB8095981AD3 /* Frameworks */,
+				9675AE965AB2731D6C0E64EA /* Sources */,
+			);
+			buildRules = ();
+			dependencies = (
+				DE58E2B17C19600779694943 /* PBXTargetDependency */,
+			);
+			name = MarketRadarTests;
+			productName = MarketRadarTests;
+			productReference = 4EF5F27FC2840F4EF5595DEE /* MarketRadarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		98F54143AB4E86B28C3AFEE0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					CCD1BDFE40AA20836710EC01 = {
+						CreatedOnToolsVersion = 15.0;
+						ProvisioningStyle = Manual;
+					};
+					5D9688571339E638D7EAD326 = {
+						CreatedOnToolsVersion = 15.0;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 45DEA8368E74E8D36B2EC1B0 /* Build configuration list for PBXProject "MarketRadar" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (en, Base);
+			mainGroup = 6CFC827E67DCAE34C72B9CED;
+			productRefGroup = 021F2B7F3E0C61452C987484 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CCD1BDFE40AA20836710EC01 /* MarketRadarApp */,
+				5D9688571339E638D7EAD326 /* MarketRadarTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		05E689F15507506FE0040640 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9675AE965AB2731D6C0E64EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DBF6CD71B0C4EC30100789D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AF4D46B88EFD37C104D91E5 /* DataSourceStatusView.swift in Sources */,
+				BD9A1449C19F64CBDF0F06BC /* DisclaimerView.swift in Sources */,
+				EFD059B15DBB49FD8E4756D2 /* EventCard.swift in Sources */,
+				A3D258A7446C9074023A60B9 /* MockBadge.swift in Sources */,
+				1A697226AFDEF8BE23476122 /* QuoteRow.swift in Sources */,
+				BF6DE0FA0925C92F8ACA1B96 /* ContentView.swift in Sources */,
+				85D93BD122F5BF132A7B216F /* RadarTheme.swift in Sources */,
+				EDD0530C778C4A9996166307 /* AlertDetailView.swift in Sources */,
+				97E715BF61EB2903BE05A3F3 /* AlertRuleEditorView.swift in Sources */,
+				9C3C929EE54ED743489338F2 /* AlertRuleListView.swift in Sources */,
+				F6B2EEB3586395520C32A024 /* AlertsView.swift in Sources */,
+				BCF5BED9EE6EA9816D1E104A /* AutomationView.swift in Sources */,
+				BB28060D0D46694054928659 /* JobDetailView.swift in Sources */,
+				A6EE7609648AB21C6997F0BE /* JobListView.swift in Sources */,
+				F0ADBB37706D3D2298B54CAD /* JobRunDetailView.swift in Sources */,
+				459448B498FA868639147F32 /* JobRunListView.swift in Sources */,
+				5D73EB653CBDE33F5A03ECF5 /* SchedulerStatusView.swift in Sources */,
+				B1528531AF97ADB5E1D6164E /* DashboardView.swift in Sources */,
+				15588F3A0706999F288460E8 /* LiveRefreshView.swift in Sources */,
+				CDDC85F1CF2134F5000C0591 /* EventsView.swift in Sources */,
+				6C0DC364B9FCD44BE1B8F927 /* ReportsView.swift in Sources */,
+				573A6163CEF9D7A9C30873F9 /* SettingsView.swift in Sources */,
+				A09892B87AB45B09808DE6AB /* WatchlistView.swift in Sources */,
+				CFB9701140BE4BB28144AF0F /* MarketRadarApp.swift in Sources */,
+				60BD7D6ABADD9B3A6A1BCBF3 /* MockMarketData.swift in Sources */,
+				7B84B3250A28A0301BCC3759 /* AlertModels.swift in Sources */,
+				063DFABEF23AE02952DDFE05 /* AutomationModels.swift in Sources */,
+				B37BB4D7BBA7F059A5E05755 /* DailyReport.swift in Sources */,
+				7CB9AE395A0B7177B6BDB8F6 /* LiveRefreshModels.swift in Sources */,
+				F1C8B1F309369D7763404E77 /* MarketEvent.swift in Sources */,
+				52020394A5F77F3E9601D697 /* MarketReport.swift in Sources */,
+				94A1AAE70372725E4B7AB849 /* ProviderStatus.swift in Sources */,
+				49E5B6B699C5475D1B4AE5B0 /* QuoteSnapshot.swift in Sources */,
+				13E56D33608A59D295421040 /* StorageModels.swift in Sources */,
+				18C0444D29B8D41F30E09130 /* APIClient.swift in Sources */,
+				18437E09565558639CF98FEC /* AppEnvironment.swift in Sources */,
+				393A488D96067A74BBCA1174 /* MarketDataStore.swift in Sources */,
+				89C15012AE620AF67B93C076 /* MockMarketService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BE4BC27101E7F29EB444ED01 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15F0ED3B2C00BBA6E0FC84B8 /* MarketRadarLocalAPITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DE58E2B17C19600779694943 /* PBXTargetDependency */ = {isa = PBXTargetDependency; target = CCD1BDFE40AA20836710EC01 /* MarketRadarApp */; targetProxy = D799BAE6088A90139B415FCC /* PBXContainerItemProxy */; };
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		58B22D68371AC8F11EADCD99 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = "17.0";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = "5.0";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+			};
+			name = Debug;
+		};
+		D005BFB4C42D9F64610280D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = "17.0";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = "5.0";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9303EFBCAFCD82C17933C9EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "MarketRadar/Supporting/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = "17.0";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kexingyan.MarketRadar";
+				PRODUCT_MODULE_NAME = MarketRadarApp;
+				PRODUCT_NAME = MarketRadar;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = "5.0";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		0F8B4C7FB77C768D3A78A504 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "MarketRadar/Supporting/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = "17.0";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kexingyan.MarketRadar";
+				PRODUCT_MODULE_NAME = MarketRadarApp;
+				PRODUCT_NAME = MarketRadar;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = "5.0";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		09B6DCF0C6D0455590144B37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = "17.0";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kexingyan.MarketRadarTests";
+				PRODUCT_MODULE_NAME = MarketRadarTests;
+				PRODUCT_NAME = MarketRadarTests;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = "5.0";
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MarketRadar.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MarketRadar";
+			};
+			name = Debug;
+		};
+		3BBB579A9CE7EF759F02D037 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = "17.0";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kexingyan.MarketRadarTests";
+				PRODUCT_MODULE_NAME = MarketRadarTests;
+				PRODUCT_NAME = MarketRadarTests;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = "5.0";
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MarketRadar.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MarketRadar";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		45DEA8368E74E8D36B2EC1B0 /* Build configuration list for PBXProject "MarketRadar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58B22D68371AC8F11EADCD99 /* Debug */,
+				D005BFB4C42D9F64610280D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F2835358D79238265300CDAC /* Build configuration list for PBXNativeTarget "MarketRadarApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9303EFBCAFCD82C17933C9EB /* Debug */,
+				0F8B4C7FB77C768D3A78A504 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F9B0E16AD5B8480358C8B0BD /* Build configuration list for PBXNativeTarget "MarketRadarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09B6DCF0C6D0455590144B37 /* Debug */,
+				3BBB579A9CE7EF759F02D037 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 98F54143AB4E86B28C3AFEE0 /* Project object */;
+}

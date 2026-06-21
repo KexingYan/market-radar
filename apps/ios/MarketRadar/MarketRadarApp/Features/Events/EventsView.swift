@@ -28,6 +28,8 @@ struct EventsView: View {
     }
 }
 
-#Preview {
-    EventsView(store: MarketDataStore())
+struct EventsView_Previews: PreviewProvider {
+    static var previews: some View {
+        EventsView(store: MarketDataStore())
+    }
 }
