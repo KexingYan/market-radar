@@ -6,27 +6,53 @@ struct DataSourceStatusView: View {
     let refresh: () -> Void
 
     var body: some View {
-        HStack(spacing: 10) {
-            VStack(alignment: .leading, spacing: 3) {
-                Text(state.rawValue)
-                    .font(.caption.weight(.semibold))
-                if let message {
-                    Text(message)
-                        .font(.caption2)
+        RadarCard {
+            HStack(spacing: 12) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Data Source")
+                        .font(.caption)
                         .foregroundStyle(.secondary)
+                    RadarStatusChip(
+                        title: state.rawValue,
+                        systemImage: iconName,
+                        tint: RadarTheme.sourceTint(for: state)
+                    )
+                    if let message {
+                        Text(message)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
-            }
 
-            Spacer()
+                Spacer()
 
-            Button(action: refresh) {
-                Image(systemName: "arrow.clockwise")
+                Button(action: refresh) {
+                    Image(systemName: "arrow.clockwise")
+                        .font(.headline)
+                        .frame(width: 36, height: 36)
+                }
+                .buttonStyle(.borderless)
+                .background(RadarTheme.elevatedBackground, in: Circle())
+                .accessibilityLabel("Refresh local market data")
             }
-            .buttonStyle(.borderless)
-            .accessibilityLabel("Refresh local Mock API")
         }
-        .padding(12)
-        .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: RadarTheme.cardRadius))
+    }
+
+    private var iconName: String {
+        switch state {
+        case .loading:
+            return "arrow.triangle.2.circlepath"
+        case .loadedFromBundledMock:
+            return "testtube.2"
+        case .loadedFromFreeMoomooQuotes:
+            return "antenna.radiowaves.left.and.right"
+        case .loadedFromSecEdgar:
+            return "doc.text.magnifyingglass"
+        case .error:
+            return "exclamationmark.triangle"
+        case .idle, .loadedFromLocalAPI:
+            return "server.rack"
+        }
     }
 }

@@ -6,36 +6,51 @@ struct ReportsView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 12) {
-                    DisclaimerView()
-                    DataSourceStatusView(
-                        state: store.dataSourceState,
-                        message: store.lastErrorMessage,
-                        refresh: {
-                            Task {
-                                await store.load()
-                            }
+            RadarPage {
+                DisclaimerView()
+                DataSourceStatusView(
+                    state: store.dataSourceState,
+                    message: store.lastErrorMessage,
+                    refresh: {
+                        Task {
+                            await store.load()
                         }
-                    )
-
-                    if let storage = store.storageStatus {
-                        Text("归档：\(storage.reportsCount) 份报告 · \(storage.databaseLocationType)")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
                     }
+                )
 
-                    if store.reports.isEmpty {
-                        ForEach(service.reports()) { report in
-                            LegacyReportCard(report: report)
+                if let storage = store.storageStatus {
+                    RadarCard {
+                        HStack(spacing: 10) {
+                            Image(systemName: "archivebox")
+                                .foregroundStyle(RadarTheme.purple)
+                                .accessibilityHidden(true)
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text("Report Archive")
+                                    .font(.subheadline.weight(.semibold))
+                                Text("\(storage.reportsCount) reports · \(storage.databaseLocationType)")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                            Spacer()
                         }
-                    } else {
-                        ForEach(store.reports) { report in
-                            MarketReportCard(report: report)
-                        }
+                        .accessibilityElement(children: .combine)
                     }
                 }
-                .padding()
+
+                RadarSectionHeader(
+                    title: "Daily Reports",
+                    subtitle: store.reports.isEmpty ? "Mock fallback is active until archived reports are available." : "Generated market notes and rule-trigger context."
+                )
+
+                if store.reports.isEmpty {
+                    ForEach(service.reports()) { report in
+                        LegacyReportCard(report: report)
+                    }
+                } else {
+                    ForEach(store.reports) { report in
+                        MarketReportCard(report: report)
+                    }
+                }
             }
             .navigationTitle("Reports")
         }
@@ -52,9 +67,9 @@ private struct MarketReportCard: View {
     let report: MarketReport
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                VStack(alignment: .leading) {
+        RadarCard {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(report.title)
                         .font(.headline)
                     Text(report.generatedAt)
@@ -74,10 +89,11 @@ private struct MarketReportCard: View {
             ForEach(report.keyPoints, id: \.self) { item in
                 Label(item, systemImage: "checkmark.circle")
                     .font(.subheadline)
+                    .foregroundStyle(.primary)
             }
 
             if !report.marketMoveAlerts.isEmpty {
-                Text("规则异动")
+                Text("Rule Movement")
                     .font(.subheadline.weight(.semibold))
                 ForEach(report.marketMoveAlerts) { alert in
                     Text(alert.description)
@@ -86,9 +102,7 @@ private struct MarketReportCard: View {
                 }
             }
         }
-        .padding(12)
-        .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: RadarTheme.cardRadius))
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -96,9 +110,9 @@ private struct LegacyReportCard: View {
     let report: DailyReport
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                VStack(alignment: .leading) {
+        RadarCard {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(report.title)
                         .font(.headline)
                     Text(report.publishedAt)
@@ -114,10 +128,9 @@ private struct LegacyReportCard: View {
             ForEach(report.bulletPoints, id: \.self) { item in
                 Label(item, systemImage: "checkmark.circle")
                     .font(.subheadline)
+                    .foregroundStyle(.primary)
             }
         }
-        .padding(12)
-        .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: RadarTheme.cardRadius))
+        .accessibilityElement(children: .combine)
     }
 }

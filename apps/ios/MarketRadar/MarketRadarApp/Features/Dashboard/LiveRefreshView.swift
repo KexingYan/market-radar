@@ -5,39 +5,52 @@ struct LiveRefreshView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                Section {
-                    DisclaimerView()
-                    DataSourceStatusView(
-                        state: store.dataSourceState,
-                        message: store.lastErrorMessage,
-                        refresh: {
-                            Task {
-                                await store.load()
-                            }
+            RadarPage {
+                DisclaimerView()
+                DataSourceStatusView(
+                    state: store.dataSourceState,
+                    message: store.lastErrorMessage,
+                    refresh: {
+                        Task {
+                            await store.load()
                         }
-                    )
-                }
+                    }
+                )
 
-                Section {
+                RadarCard {
+                    HStack(alignment: .top, spacing: 12) {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("Manual Live Refresh")
+                                .font(.title3.weight(.semibold))
+                            Text("One-shot local watchlist refresh. Results are redacted: prices, account data, holdings, assets, and orders are not displayed.")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        Spacer()
+                        RadarStatusChip(title: liveStateLabel, systemImage: liveStateIcon, tint: liveStateTint)
+                    }
+
                     Button {
                         Task {
                             await store.runLiveWatchlistRefresh()
                         }
                     } label: {
                         Label(buttonTitle, systemImage: "arrow.clockwise.circle")
+                            .frame(maxWidth: .infinity)
                     }
+                    .buttonStyle(.borderedProminent)
                     .disabled(store.liveRefreshState == .loading)
+                    .accessibilityHint("Runs the local watchlist refresh endpoint once.")
+                }
 
-                    Text("Runs one local watchlist refresh through the local API. No system notifications, account reads, or trades are performed.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                } header: {
-                    Text("Manual Live Refresh")
+                if store.liveRefreshState == .loading {
+                    RadarLoadingState(title: "Running local refresh...")
                 }
 
                 if let result = store.liveRefreshResult {
-                    Section {
+                    RadarSectionHeader(title: "Live Summary", subtitle: "Provider results and archive counts only.")
+                    RadarCard {
                         StatusRow(title: "Processed symbols", value: result.symbols.joined(separator: ", "))
                         StatusRow(title: "Watchlist fallback AAPL", value: result.fallbackSymbolUsed ? "yes" : "no")
                         StatusRow(title: "SEC success", value: result.sec.success ? "yes" : "no")
@@ -51,13 +64,12 @@ struct LiveRefreshView: View {
                         StatusRow(title: "Report archived", value: result.report.generated ? "yes" : "no")
                         StatusRow(title: "Alerts created", value: "\(result.alerts.createdAlerts)")
                         StatusRow(title: "Job run", value: result.jobRun.status)
-                    } header: {
-                        Text("Live Summary")
                     }
                 }
 
                 if let history = store.liveHistorySnapshot {
-                    Section {
+                    RadarSectionHeader(title: "History Verification", subtitle: "Quote prices are intentionally hidden on this page.")
+                    RadarCard {
                         StatusRow(title: "Quote rows", value: "\(history.quoteRows)")
                         if let symbol = history.quoteSymbols.first {
                             StatusRow(title: "Latest quote symbol", value: symbol)
@@ -72,18 +84,17 @@ struct LiveRefreshView: View {
                             StatusRow(title: "New alerts", value: "\(summary.new)")
                             StatusRow(title: "High/Critical alerts", value: "\(summary.highOrCritical)")
                         }
-                    } header: {
-                        Text("History Verification")
-                    } footer: {
-                        Text("Quote history is shown only as row count, symbol, and timestamp. Prices are intentionally not displayed here.")
                     }
                 }
 
                 if case .error(let message) = store.liveRefreshState {
-                    Section {
+                    RadarCard {
+                        RadarStatusChip(title: "Refresh failed", systemImage: "exclamationmark.triangle", tint: RadarTheme.negative)
                         Text(message)
-                            .foregroundStyle(.red)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
                     }
+                    .accessibilityLabel("Refresh failed. \(message)")
                 }
             }
             .navigationTitle("Live Refresh")
@@ -98,6 +109,45 @@ struct LiveRefreshView: View {
             return "Run Live Refresh Again"
         default:
             return "Run Live Refresh"
+        }
+    }
+
+    private var liveStateLabel: String {
+        switch store.liveRefreshState {
+        case .idle:
+            return "Ready"
+        case .loading:
+            return "Running"
+        case .loaded:
+            return "Complete"
+        case .error:
+            return "Error"
+        }
+    }
+
+    private var liveStateIcon: String {
+        switch store.liveRefreshState {
+        case .idle:
+            return "pause.circle"
+        case .loading:
+            return "arrow.triangle.2.circlepath"
+        case .loaded:
+            return "checkmark.circle"
+        case .error:
+            return "exclamationmark.triangle"
+        }
+    }
+
+    private var liveStateTint: Color {
+        switch store.liveRefreshState {
+        case .idle:
+            return RadarTheme.accent
+        case .loading:
+            return RadarTheme.purple
+        case .loaded:
+            return RadarTheme.positive
+        case .error:
+            return RadarTheme.negative
         }
     }
 }
@@ -115,6 +165,8 @@ private struct StatusRow: View {
                 .multilineTextAlignment(.trailing)
         }
         .font(.subheadline)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(title), \(value)")
     }
 }
 

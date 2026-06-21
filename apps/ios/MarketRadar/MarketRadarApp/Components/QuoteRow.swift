@@ -10,8 +10,15 @@ struct QuoteRow: View {
     var body: some View {
         HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 3) {
-                Text(quote.symbol)
-                    .font(.headline)
+                HStack(spacing: 6) {
+                    Text(quote.symbol)
+                        .font(.headline)
+                    RadarStatusChip(
+                        title: quote.isDelayed ? "Delayed" : "Live",
+                        systemImage: quote.isDelayed ? "clock" : "dot.radiowaves.left.and.right",
+                        tint: quote.isDelayed ? RadarTheme.warning : RadarTheme.positive
+                    )
+                }
                 Text(quote.displayName)
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -29,11 +36,15 @@ struct QuoteRow: View {
             VStack(alignment: .trailing, spacing: 3) {
                 Text("\(quote.currency) \(quote.price.radarString)")
                     .font(.headline)
+                    .monospacedDigit()
                 Text("\(quote.change.radarString) / \(quote.changePercent.radarString)%")
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(changeColor)
             }
         }
         .padding(.vertical, 8)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(quote.symbol), \(quote.displayName), \(quote.isDelayed ? "delayed" : "live"), provider \(quote.provider)")
+        .accessibilityValue("\(quote.currency) \(quote.price.radarString), change \(quote.changePercent.radarString) percent")
     }
 }

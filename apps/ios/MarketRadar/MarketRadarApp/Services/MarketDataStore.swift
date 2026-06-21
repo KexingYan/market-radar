@@ -205,7 +205,7 @@ final class MarketDataStore: ObservableObject {
 
     func addLocalWatchlist(symbol: String, displayName: String, market: String) async {
         do {
-            try await apiClient.addLocalWatchlistItem(
+            _ = try await apiClient.addLocalWatchlistItem(
                 LocalWatchlistRequest(symbol: symbol, displayName: displayName, market: market)
             )
             await load()

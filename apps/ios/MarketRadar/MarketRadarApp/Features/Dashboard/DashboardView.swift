@@ -5,71 +5,112 @@ struct DashboardView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: RadarTheme.sectionSpacing) {
-                    DisclaimerView()
-                    DataSourceStatusView(
-                        state: store.dataSourceState,
-                        message: store.lastErrorMessage,
-                        refresh: {
-                            Task {
-                                await store.load()
-                            }
+            RadarPage {
+                DisclaimerView()
+                DataSourceStatusView(
+                    state: store.dataSourceState,
+                    message: store.lastErrorMessage,
+                    refresh: {
+                        Task {
+                            await store.load()
                         }
-                    )
-
-                    if let summary = store.alertSummary {
-                        HStack {
-                            Label("Alerts \(summary.new)", systemImage: "bell.badge")
-                            Spacer()
-                            Text("High/Critical \(summary.highOrCritical)")
-                        }
-                        .font(.subheadline.weight(.semibold))
-                        .padding(12)
-                        .background(Color(.secondarySystemBackground))
-                        .clipShape(RoundedRectangle(cornerRadius: RadarTheme.cardRadius))
                     }
+                )
 
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 10) {
-                            ForEach(store.indices) { quote in
-                                MarketIndexTile(quote: quote)
-                            }
+                DashboardHero(store: store)
+
+                RadarSectionHeader(
+                    title: "Market Tape",
+                    subtitle: "Mock-safe quote surface with source and freshness visible."
+                )
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHStack(spacing: 10) {
+                        ForEach(store.indices) { quote in
+                            MarketIndexTile(quote: quote)
                         }
-                        .padding(.vertical, 2)
                     }
+                    .padding(.vertical, 2)
+                }
+                .accessibilityLabel("Market index cards")
 
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text("今日市场概览")
-                                .font(.headline)
-                            Spacer()
-                            MockBadge()
-                        }
-                        Text("当前为 Mock 演示数据，不代表真实市场价格。指数和自选股仅用于验证布局、信息密度和风险提示。")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                    }
-                    .padding(12)
-                    .background(Color(.secondarySystemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: RadarTheme.cardRadius))
-
-                    SectionHeader(title: "自选股快速列表")
-                    VStack(spacing: 0) {
-                        ForEach(store.watchlist.prefix(4)) { quote in
+                RadarSectionHeader(title: "Watchlist", subtitle: "Local-only symbols, no holdings or account data.")
+                if store.watchlist.isEmpty {
+                    RadarEmptyState(title: "No Watchlist Rows", message: "Local watchlist data will appear here after the Mock API or bundled fallback loads.", systemImage: "star")
+                } else {
+                    RadarCard {
+                        ForEach(watchlistPreview) { quote in
                             QuoteRow(quote: quote)
-                            Divider()
+                            if quote.id != watchlistPreview.last?.id {
+                                Divider()
+                            }
                         }
                     }
+                }
 
-                    SectionHeader(title: "重大事件时间线")
+                RadarSectionHeader(title: "Event Timeline", subtitle: "Regulatory filings and mock events are labeled by source.")
+                if store.events.isEmpty {
+                    RadarEmptyState(title: "No Events", message: "Major filings and local mock events will appear here.", systemImage: "bolt")
+                } else {
                     ForEach(store.events) { event in
                         EventCard(event: event)
                     }
                 }
-                .padding()
             }
             .navigationTitle("Market Radar")
+        }
+    }
+
+    private var watchlistPreview: [QuoteSnapshot] {
+        Array(store.watchlist.prefix(4))
+    }
+}
+
+private struct DashboardHero: View {
+    @ObservedObject var store: MarketDataStore
+
+    var body: some View {
+        RadarCard {
+            HStack(alignment: .top, spacing: 12) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Command Center")
+                        .font(.title2.weight(.semibold))
+                    Text("Live readiness, mock fallback, alerts, and data freshness in one place.")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer()
+                RadarStatusChip(
+                    title: store.dataSourceState.rawValue,
+                    systemImage: "waveform.path.ecg",
+                    tint: RadarTheme.sourceTint(for: store.dataSourceState)
+                )
+            }
+
+            HStack(spacing: 10) {
+                RadarMetricTile(
+                    title: "Watchlist",
+                    value: "\(store.watchlist.count)",
+                    detail: "local rows",
+                    tint: RadarTheme.accent,
+                    systemImage: "star.fill"
+                )
+                RadarMetricTile(
+                    title: "Events",
+                    value: "\(store.events.count)",
+                    detail: "timeline",
+                    tint: RadarTheme.purple,
+                    systemImage: "bolt.fill"
+                )
+            }
+
+            if let summary = store.alertSummary {
+                HStack(spacing: 8) {
+                    RadarStatusChip(title: "New \(summary.new)", systemImage: "tray.full", tint: RadarTheme.warning)
+                    RadarStatusChip(title: "High/Critical \(summary.highOrCritical)", systemImage: "exclamationmark.triangle", tint: RadarTheme.negative)
+                }
+                .accessibilityElement(children: .combine)
+            }
         }
     }
 }
@@ -78,30 +119,20 @@ private struct MarketIndexTile: View {
     let quote: QuoteSnapshot
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        RadarCard {
             Text(quote.displayName)
                 .font(.caption)
                 .foregroundStyle(.secondary)
             Text(quote.price.radarString)
                 .font(.headline)
+                .monospacedDigit()
             Text("\(quote.changePercent.radarString)% · 延迟")
                 .font(.caption.weight(.semibold))
-                .foregroundStyle(quote.change >= 0 ? .green : .red)
+                .foregroundStyle(quote.change >= 0 ? RadarTheme.positive : RadarTheme.negative)
         }
         .frame(width: 150, alignment: .leading)
-        .padding(12)
-        .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: RadarTheme.cardRadius))
-    }
-}
-
-private struct SectionHeader: View {
-    let title: String
-
-    var body: some View {
-        Text(title)
-            .font(.headline)
-            .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(quote.displayName), \(quote.price.radarString), change \(quote.changePercent.radarString) percent, delayed")
     }
 }
 

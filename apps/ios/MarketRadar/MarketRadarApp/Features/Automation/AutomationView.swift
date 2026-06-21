@@ -5,56 +5,114 @@ struct AutomationView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                Section {
+            RadarPage {
+                RadarSectionHeader(
+                    title: "Foreground Scheduler",
+                    subtitle: "Runs only while the local scheduler process is open."
+                )
+                RadarCard {
                     SchedulerStatusView(status: store.schedulerStatus)
-                    Text("The scheduler only runs while the local foreground scheduler process is open.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
                     Text("仅当前台调度器进程保持运行时，自动任务才会执行。")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                } header: {
-                    Text("Foreground Scheduler")
                 }
 
-                Section {
+                RadarSectionHeader(
+                    title: "Manual Run",
+                    subtitle: "Local Mock API only. No background services, notifications, or trades."
+                )
+                RadarCard {
                     Button {
                         Task {
                             await store.runPipeline()
                         }
                     } label: {
-                        Label(store.isRunningJob ? "Running..." : "Run Full Pipeline", systemImage: "play.circle")
+                        Label(store.isRunningJob ? "Running..." : "Run Full Pipeline", systemImage: store.isRunningJob ? "hourglass" : "play.circle")
+                            .frame(maxWidth: .infinity)
                     }
+                    .buttonStyle(.borderedProminent)
+                    .tint(RadarTheme.accent)
                     .disabled(store.isRunningJob)
 
+                    if store.isRunningJob {
+                        HStack(spacing: 10) {
+                            ProgressView()
+                            Text("Pipeline is running")
+                                .font(.subheadline.weight(.semibold))
+                        }
+                        .accessibilityElement(children: .combine)
+                    }
+
                     if let run = store.lastManualRun {
-                        Text("Last run: \(run.jobKey) - \(run.status)")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                } footer: {
-                    Text("Manual runs use the local Mock API only. They do not start background services, send notifications, or place trades.")
-                }
-
-                Section("Jobs") {
-                    NavigationLink {
-                        JobListView(store: store)
-                    } label: {
-                        Label("Jobs", systemImage: "list.bullet.rectangle")
+                        HStack(spacing: 8) {
+                            RadarStatusChip(title: run.status, systemImage: run.status == "succeeded" ? "checkmark.circle" : "clock", tint: run.status == "succeeded" ? RadarTheme.positive : RadarTheme.warning)
+                            Text("Last run: \(run.jobKey)")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        .accessibilityElement(children: .combine)
                     }
                 }
 
-                Section("Recent Runs") {
-                    NavigationLink {
-                        JobRunListView(runs: store.jobRuns)
-                    } label: {
-                        Label("Job runs", systemImage: "clock.arrow.circlepath")
-                    }
+                RadarSectionHeader(title: "Operations")
+                NavigationLink {
+                    JobListView(store: store)
+                } label: {
+                    NavigationCard(
+                        title: "Jobs",
+                        subtitle: "\(store.jobs.count) configured jobs",
+                        systemImage: "list.bullet.rectangle",
+                        tint: RadarTheme.purple
+                    )
                 }
+                .buttonStyle(.plain)
+
+                NavigationLink {
+                    JobRunListView(runs: store.jobRuns)
+                } label: {
+                    NavigationCard(
+                        title: "Job Runs",
+                        subtitle: "\(store.jobRuns.count) recent runs",
+                        systemImage: "clock.arrow.circlepath",
+                        tint: RadarTheme.accent
+                    )
+                }
+                .buttonStyle(.plain)
             }
             .navigationTitle("Automation")
         }
+    }
+}
+
+private struct NavigationCard: View {
+    let title: String
+    let subtitle: String
+    let systemImage: String
+    let tint: Color
+
+    var body: some View {
+        RadarCard {
+            HStack(spacing: 12) {
+                Image(systemName: systemImage)
+                    .font(.headline)
+                    .foregroundStyle(tint)
+                    .frame(width: 28)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(title)
+                        .font(.headline)
+                    Text(subtitle)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.tertiary)
+                    .accessibilityHidden(true)
+            }
+        }
+        .accessibilityElement(children: .combine)
     }
 }
 

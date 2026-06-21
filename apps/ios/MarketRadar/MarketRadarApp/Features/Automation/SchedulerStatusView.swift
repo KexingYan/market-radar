@@ -5,8 +5,12 @@ struct SchedulerStatusView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Label(status?.schedulerProcessRunning == true ? "Running" : "Stopped", systemImage: "timer")
+            HStack(alignment: .firstTextBaseline) {
+                RadarStatusChip(
+                    title: status?.schedulerProcessRunning == true ? "Running" : "Stopped",
+                    systemImage: "timer",
+                    tint: status?.schedulerProcessRunning == true ? RadarTheme.positive : RadarTheme.warning
+                )
                 Spacer()
                 Text(status?.mode ?? "foreground_only")
                     .font(.caption)
@@ -18,6 +22,7 @@ struct SchedulerStatusView: View {
                 LabeledContent("Next run", value: nextRunAt)
             }
         }
+        .font(.subheadline)
+        .accessibilityElement(children: .combine)
     }
 }
-

@@ -15,13 +15,13 @@ struct EventCard: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        RadarCard {
             HStack {
-                Text(event.eventType.rawValue)
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(.blue)
+                RadarStatusChip(title: event.eventType.rawValue, systemImage: "bolt.fill", tint: RadarTheme.accent)
                 Spacer()
-                MockBadge()
+                if event.isMock {
+                    MockBadge()
+                }
             }
 
             Text(event.title)
@@ -36,9 +36,9 @@ struct EventCard: View {
             HStack {
                 Text(event.affectedSymbols.joined(separator: ", "))
                     .font(.caption)
+                    .foregroundStyle(.secondary)
                 Spacer()
-                Text("重要性 \(event.importanceScore)")
-                    .font(.caption.weight(.semibold))
+                RadarStatusChip(title: "重要性 \(event.importanceScore)", systemImage: "gauge.with.dots.needle.67percent", tint: sentimentColor)
             }
 
             HStack {
@@ -54,8 +54,6 @@ struct EventCard: View {
                     .foregroundStyle(sentimentColor)
             }
         }
-        .padding(12)
-        .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: RadarTheme.cardRadius))
+        .accessibilityElement(children: .combine)
     }
 }
