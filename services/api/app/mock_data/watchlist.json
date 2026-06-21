@@ -1,0 +1,44 @@
+[
+  {
+    "symbol": "AAPL",
+    "display_name": "Apple Inc. Mock Snapshot",
+    "market": "US",
+    "note": "Mock watchlist item for UI demonstration.",
+    "is_mock": true
+  },
+  {
+    "symbol": "NVDA",
+    "display_name": "NVIDIA Corp. Mock Snapshot",
+    "market": "US",
+    "note": "Mock watchlist item for UI demonstration.",
+    "is_mock": true
+  },
+  {
+    "symbol": "TSLA",
+    "display_name": "Tesla Inc. Mock Snapshot",
+    "market": "US",
+    "note": "Mock watchlist item for UI demonstration.",
+    "is_mock": true
+  },
+  {
+    "symbol": "MSFT",
+    "display_name": "Microsoft Corp. Mock Snapshot",
+    "market": "US",
+    "note": "Mock watchlist item for UI demonstration.",
+    "is_mock": true
+  },
+  {
+    "symbol": "0700.HK",
+    "display_name": "Tencent Holdings Mock Snapshot",
+    "market": "HK",
+    "note": "Mock watchlist item for UI demonstration.",
+    "is_mock": true
+  },
+  {
+    "symbol": "000001.SZ",
+    "display_name": "Ping An Bank Mock Snapshot",
+    "market": "CN",
+    "note": "Mock watchlist item for UI demonstration.",
+    "is_mock": true
+  }
+]
