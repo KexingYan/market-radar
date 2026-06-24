@@ -1,20 +1,47 @@
 import Foundation
 
-struct APIClient {
-    enum APIError: Error {
+final class APIClient {
+    enum APIError: Error, LocalizedError {
         case invalidResponse
         case httpStatus(Int)
         case invalidURL
+
+        var errorDescription: String? {
+            switch self {
+            case .invalidResponse:
+                return "The backend returned a non-HTTP response."
+            case .httpStatus(let status):
+                return "The backend returned HTTP \(status)."
+            case .invalidURL:
+                return "The configured backend URL is invalid."
+            }
+        }
     }
 
-    private let baseURL: URL
+    struct RequestDiagnostics: Equatable {
+        let backendMode: String
+        let baseURL: String
+        let endpoint: String
+        let method: String
+        let httpStatus: Int?
+        let errorMessage: String?
+    }
+
+    private let fixedBaseURL: URL?
     private let session: URLSession
     private let decoder: JSONDecoder
+    private let diagnosticsHandler: (@Sendable (RequestDiagnostics) -> Void)?
+    private(set) var lastDiagnostics: RequestDiagnostics?
 
-    init(baseURL: URL = AppEnvironment.apiBaseURL, session: URLSession = .shared) {
-        self.baseURL = baseURL
+    init(
+        baseURL: URL? = nil,
+        session: URLSession = .shared,
+        diagnosticsHandler: (@Sendable (RequestDiagnostics) -> Void)? = nil
+    ) {
+        self.fixedBaseURL = baseURL
         self.session = session
         self.decoder = JSONDecoder()
+        self.diagnosticsHandler = diagnosticsHandler
     }
 
     func getQuotes() async throws -> [QuoteSnapshot] {
@@ -122,23 +149,32 @@ struct APIClient {
     }
 
     private func get<T: Decodable>(path: String) async throws -> T {
-        let url = try makeURL(path: path)
+        let baseURL = resolvedBaseURL()
+        let url = try makeURL(path: path, baseURL: baseURL)
         var request = URLRequest(url: url)
         request.timeoutInterval = 5
         request.cachePolicy = .reloadIgnoringLocalCacheData
 
-        let (data, response) = try await session.data(for: request)
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw APIError.invalidResponse
+        do {
+            let (data, response) = try await session.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse else {
+                recordDiagnostics(baseURL: baseURL, path: path, method: "GET", status: nil, error: APIError.invalidResponse)
+                throw APIError.invalidResponse
+            }
+            recordDiagnostics(baseURL: baseURL, path: path, method: "GET", status: httpResponse.statusCode, error: nil)
+            guard (200...299).contains(httpResponse.statusCode) else {
+                throw APIError.httpStatus(httpResponse.statusCode)
+            }
+            return try decoder.decode(T.self, from: data)
+        } catch {
+            recordDiagnostics(baseURL: baseURL, path: path, method: "GET", status: nil, error: error)
+            throw error
         }
-        guard (200...299).contains(httpResponse.statusCode) else {
-            throw APIError.httpStatus(httpResponse.statusCode)
-        }
-        return try decoder.decode(T.self, from: data)
     }
 
     private func send<T: Decodable, B: Encodable>(path: String, method: String, body: B) async throws -> T {
-        let url = try makeURL(path: path)
+        let baseURL = resolvedBaseURL()
+        let url = try makeURL(path: path, baseURL: baseURL)
         var request = URLRequest(url: url)
         request.httpMethod = method
         request.timeoutInterval = 5
@@ -146,21 +182,45 @@ struct APIClient {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = try JSONEncoder().encode(body)
         }
-        let (data, response) = try await session.data(for: request)
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw APIError.invalidResponse
+        do {
+            let (data, response) = try await session.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse else {
+                recordDiagnostics(baseURL: baseURL, path: path, method: method, status: nil, error: APIError.invalidResponse)
+                throw APIError.invalidResponse
+            }
+            recordDiagnostics(baseURL: baseURL, path: path, method: method, status: httpResponse.statusCode, error: nil)
+            guard (200...299).contains(httpResponse.statusCode) else {
+                throw APIError.httpStatus(httpResponse.statusCode)
+            }
+            return try decoder.decode(T.self, from: data)
+        } catch {
+            recordDiagnostics(baseURL: baseURL, path: path, method: method, status: nil, error: error)
+            throw error
         }
-        guard (200...299).contains(httpResponse.statusCode) else {
-            throw APIError.httpStatus(httpResponse.statusCode)
-        }
-        return try decoder.decode(T.self, from: data)
     }
 
-    private func makeURL(path: String) throws -> URL {
+    private func resolvedBaseURL() -> URL {
+        fixedBaseURL ?? AppEnvironment.apiBaseURL
+    }
+
+    private func makeURL(path: String, baseURL: URL) throws -> URL {
         guard let url = URL(string: path, relativeTo: baseURL)?.absoluteURL else {
             throw APIError.invalidURL
         }
         return url
+    }
+
+    private func recordDiagnostics(baseURL: URL, path: String, method: String, status: Int?, error: Error?) {
+        let diagnostics = RequestDiagnostics(
+            backendMode: AppEnvironment.backendMode.rawValue,
+            baseURL: baseURL.absoluteString.trimmingCharacters(in: CharacterSet(charactersIn: "/")),
+            endpoint: "\(method) \(path)",
+            method: method,
+            httpStatus: status,
+            errorMessage: error.map { String(describing: $0) }
+        )
+        lastDiagnostics = diagnostics
+        diagnosticsHandler?(diagnostics)
     }
 }
 

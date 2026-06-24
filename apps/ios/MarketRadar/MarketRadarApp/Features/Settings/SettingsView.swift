@@ -1,22 +1,63 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @ObservedObject var store: MarketDataStore
+    @AppStorage(AppEnvironment.backendModeKey) private var backendModeRawValue = BackendMode.simulatorLocal.rawValue
+    @AppStorage(AppEnvironment.backendURLKey) private var backendURL = ""
+    @State private var isTestingConnection = false
+    @State private var connectionStatus: String?
+
+    private var backendMode: Binding<BackendMode> {
+        Binding(
+            get: { BackendMode(rawValue: backendModeRawValue) ?? .simulatorLocal },
+            set: { backendModeRawValue = $0.rawValue }
+        )
+    }
+
     var body: some View {
         NavigationStack {
             List {
-                Section("数据状态") {
-                    LabeledContent("Provider", value: "mock")
-                    LabeledContent("真实行情", value: "未接入")
-                    LabeledContent("交易功能", value: "未实现")
-                    LabeledContent("推送通知", value: "未实现")
+                Section("Backend") {
+                    Picker("Backend Mode", selection: backendMode) {
+                        ForEach(BackendMode.allCases) { mode in
+                            Text(mode.rawValue).tag(mode)
+                        }
+                    }
+
+                    TextField("http://192.168.x.x:8000", text: $backendURL)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                        .keyboardType(.URL)
+                        .disabled(backendMode.wrappedValue != .iPhoneLAN)
+
+                    LabeledContent("Resolved URL", value: AppEnvironment.resolvedBaseURLString)
+
+                    Button {
+                        Task {
+                            await testConnection()
+                        }
+                    } label: {
+                        Label(isTestingConnection ? "Testing..." : "Test Connection", systemImage: "network")
+                    }
+                    .disabled(isTestingConnection)
+
+                    if let connectionStatus {
+                        Text(connectionStatus)
+                            .font(.caption)
+                            .foregroundStyle(connectionStatus == "Connected" ? .green : .red)
+                    }
                 }
 
-                Section("安全边界") {
-                    Text("手机客户端不保存券商密码，不直接连接券商桌面网关，不包含真实 API 密钥。")
-                    Text("仅供信息展示，不构成投资建议。")
+                Section("Data Status") {
+                    LabeledContent("Quote Provider", value: store.providerStatus?.quotes.active ?? "not loaded")
+                    LabeledContent("Event Provider", value: store.providerStatus?.events.active ?? "not loaded")
+                    LabeledContent("Trading", value: "disabled")
+                    LabeledContent("System Notifications", value: "not implemented")
                 }
 
-                Section {
+                Section("Safety") {
+                    Text("The iOS app calls only the configured local Market Radar backend. It does not connect to Moomoo OpenD directly.")
+                    Text("No broker password, account, holdings, assets, orders, or trading actions are stored or requested.")
                     DisclaimerView()
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.clear)
@@ -25,10 +66,26 @@ struct SettingsView: View {
             .navigationTitle("Settings")
         }
     }
+
+    private func testConnection() async {
+        isTestingConnection = true
+        connectionStatus = nil
+        defer {
+            isTestingConnection = false
+        }
+
+        do {
+            _ = try await APIClient().getProviderStatus()
+            connectionStatus = "Connected"
+            await store.load()
+        } catch {
+            connectionStatus = "Failed: \(String(describing: error))"
+        }
+    }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        SettingsView(store: MarketDataStore())
     }
 }

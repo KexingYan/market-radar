@@ -226,7 +226,12 @@ class SQLiteReportRepository:
 
     async def get_report(self, report_id: str) -> MarketReport | None:
         with self._session_factory() as session:
-            row = session.execute(select(ReportRow).where(ReportRow.report_id == report_id)).scalar_one_or_none()
+            row = session.execute(
+                select(ReportRow)
+                .where(ReportRow.report_id == report_id)
+                .order_by(ReportRow.generated_at.desc(), ReportRow.id.desc())
+                .limit(1)
+            ).scalar_one_or_none()
         return _row_to_report(row) if row else None
 
     async def list_reports(

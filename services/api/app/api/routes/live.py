@@ -2,6 +2,8 @@ from fastapi import APIRouter
 
 from app.alerts.service import AlertService
 from app.live_e2e import LiveAaplE2EResponse, LiveAaplE2EService, LiveWatchlistRefreshResponse
+from app.providers import registry
+from app.providers.base import ProviderReason, ProviderStatus
 from app.repositories import (
     alert_repository,
     alert_rule_repository,
@@ -35,10 +37,25 @@ service = LiveAaplE2EService(
 
 @router.post("/aapl-e2e")
 async def live_aapl_e2e() -> LiveAaplE2EResponse:
-    return await service.run()
+    response = await service.run()
+    _record_live_quote_status(response.moomoo.success)
+    return response
 
 
 @router.post("/watchlist-refresh")
 async def live_watchlist_refresh() -> LiveWatchlistRefreshResponse:
     watchlist = await watchlist_repository.list_symbols()
-    return await service.run_watchlist_refresh(watchlist)
+    response = await service.run_watchlist_refresh(watchlist)
+    _record_live_quote_status(response.moomoo.success)
+    return response
+
+
+def _record_live_quote_status(success: bool) -> None:
+    if registry.settings.market_data_provider != "moomoo":
+        return
+    registry.quote_provider.last_status = ProviderStatus(
+        configured="moomoo",
+        active="moomoo" if success else "mock",
+        available=success,
+        reason=None if success else ProviderReason.opend_unavailable,
+    )

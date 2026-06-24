@@ -40,7 +40,7 @@ struct ContentView: View {
                     Label("Live", systemImage: "dot.radiowaves.left.and.right")
                 }
 
-            SettingsView()
+            SettingsView(store: marketDataStore)
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
                 }

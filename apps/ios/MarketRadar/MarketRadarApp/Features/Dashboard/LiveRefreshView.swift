@@ -48,6 +48,25 @@ struct LiveRefreshView: View {
                     RadarLoadingState(title: "Running local refresh...")
                 }
 
+                Section("Backend Diagnostics") {
+                    StatusRow(title: "Backend mode", value: store.liveRefreshDiagnostics.backendMode)
+                    StatusRow(title: "Base URL", value: store.liveRefreshDiagnostics.baseURL)
+                    StatusRow(title: "Endpoint", value: store.liveRefreshDiagnostics.endpoint)
+                    StatusRow(
+                        title: "Status",
+                        value: store.liveRefreshDiagnostics.httpStatus.map(String.init) ?? "not requested"
+                    )
+                    StatusRow(title: "Provider", value: providerSummary)
+                    if let fallbackReason = store.liveRefreshDiagnostics.fallbackReason {
+                        StatusRow(title: "Fallback reason", value: fallbackReason)
+                    }
+                    if let lastError = store.liveRefreshDiagnostics.lastError {
+                        Text(lastError)
+                            .font(.caption)
+                            .foregroundStyle(.red)
+                    }
+                }
+
                 if let result = store.liveRefreshResult {
                     RadarSectionHeader(title: "Live Summary", subtitle: "Provider results and archive counts only.")
                     RadarCard {
@@ -149,6 +168,13 @@ struct LiveRefreshView: View {
         case .error:
             return RadarTheme.negative
         }
+    }
+
+    private var providerSummary: String {
+        guard let status = store.providerStatus else {
+            return "not loaded"
+        }
+        return "quotes configured=\(status.quotes.configured), active=\(status.quotes.active)"
     }
 }
 

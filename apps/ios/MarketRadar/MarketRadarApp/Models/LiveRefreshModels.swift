@@ -106,6 +106,26 @@ struct LiveHistorySnapshot {
     let jobRunRows: Int
 }
 
+struct LiveRefreshDiagnostics: Equatable {
+    let backendMode: String
+    let baseURL: String
+    let endpoint: String
+    let httpStatus: Int?
+    let lastError: String?
+    let fallbackReason: String?
+
+    static var currentEndpoint: LiveRefreshDiagnostics {
+        LiveRefreshDiagnostics(
+            backendMode: AppEnvironment.backendMode.rawValue,
+            baseURL: AppEnvironment.resolvedBaseURLString,
+            endpoint: "POST /api/v1/live/watchlist-refresh",
+            httpStatus: nil,
+            lastError: nil,
+            fallbackReason: nil
+        )
+    }
+}
+
 enum LiveRefreshViewState: Equatable {
     case idle
     case loading

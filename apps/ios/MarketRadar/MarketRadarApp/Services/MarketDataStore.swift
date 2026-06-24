@@ -30,6 +30,7 @@ final class MarketDataStore: ObservableObject {
     @Published private(set) var liveRefreshResult: LiveRefreshResponse?
     @Published private(set) var liveHistorySnapshot: LiveHistorySnapshot?
     @Published private(set) var liveRefreshState: LiveRefreshViewState = .idle
+    @Published private(set) var liveRefreshDiagnostics: LiveRefreshDiagnostics = .currentEndpoint
     @Published private(set) var isRunningJob: Bool = false
     @Published private(set) var lastErrorMessage: String?
 
@@ -137,9 +138,17 @@ final class MarketDataStore: ObservableObject {
             return
         }
         liveRefreshState = .loading
+        liveRefreshDiagnostics = .currentEndpoint
+        liveRefreshResult = nil
+        liveHistorySnapshot = nil
+        lastErrorMessage = nil
         do {
             let result = try await apiClient.runLiveWatchlistRefresh()
             liveRefreshResult = result
+            liveRefreshDiagnostics = diagnostics(
+                fallbackReason: result.moomoo.fallbackUsed ? "Moomoo fallback used" : nil,
+                error: nil
+            )
             let primarySymbol = result.symbols.first ?? "AAPL"
             async let quoteHistory = apiClient.getQuoteHistory(symbol: primarySymbol)
             async let eventHistory = apiClient.getEventHistory(symbol: primarySymbol)
@@ -168,8 +177,10 @@ final class MarketDataStore: ObservableObject {
             liveRefreshState = .loaded
             dataSourceState = resolvedState(from: providerStatus)
         } catch {
-            liveRefreshState = .error("Local API unavailable; live refresh was not run.")
-            lastErrorMessage = "Local API unavailable; live refresh was not run."
+            let message = userFacingErrorMessage(error)
+            liveRefreshDiagnostics = diagnostics(fallbackReason: "Request failed before live refresh completed", error: error)
+            liveRefreshState = .error(message)
+            lastErrorMessage = message
         }
     }
 
@@ -234,5 +245,27 @@ final class MarketDataStore: ObservableObject {
             return .loadedFromSecEdgar
         }
         return .loadedFromLocalAPI
+    }
+
+    private func diagnostics(fallbackReason: String?, error: Error?) -> LiveRefreshDiagnostics {
+        let latest = apiClient.lastDiagnostics
+        return LiveRefreshDiagnostics(
+            backendMode: latest?.backendMode ?? AppEnvironment.backendMode.rawValue,
+            baseURL: latest?.baseURL ?? AppEnvironment.resolvedBaseURLString,
+            endpoint: latest?.endpoint ?? "POST /api/v1/live/watchlist-refresh",
+            httpStatus: latest?.httpStatus,
+            lastError: latest?.errorMessage ?? error.map { String(describing: $0) },
+            fallbackReason: fallbackReason
+        )
+    }
+
+    private func userFacingErrorMessage(_ error: Error) -> String {
+        let latest = apiClient.lastDiagnostics
+        let endpoint = latest?.endpoint ?? "POST /api/v1/live/watchlist-refresh"
+        let baseURL = latest?.baseURL ?? AppEnvironment.resolvedBaseURLString
+        if let status = latest?.httpStatus {
+            return "\(endpoint) failed with HTTP \(status) at \(baseURL)."
+        }
+        return "\(endpoint) failed at \(baseURL): \(String(describing: error))"
     }
 }
